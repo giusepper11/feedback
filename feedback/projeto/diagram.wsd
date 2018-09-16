@@ -1,0 +1,51 @@
+@startuml Feedback
+
+skinparam roudcorner 10
+
+title
+Feedback App
+end title
+
+package feedback.accounts{
+
+
+class User #pink{
+    CharField first_name
+    CharField last_name
+    CharField username
+    CharField email
+    CharField password
+}
+
+class Profile #silver{
+    ForeignKey User
+    ImageField photo
+    TextField bio
+    DateField birthday
+    CharField genre
+    CharField cell_phone
+}
+note right of Profile::genre
+CHOICES_GENRE =('M', ('Masculino')),('F', ('Feminino'))
+end note
+}
+
+package feedback.comments{
+    class Circle #silver {
+        Charfield name
+    }
+
+    class Comment #silver{
+        ForeignKey User
+        TextField comment
+        ForeignKey Circle
+        DateTimeField created_at
+
+    }
+}
+
+User "1" --* "1" Profile
+Comment "1"*--"1" Circle
+Comment "1"*-- "1" User
+
+@enduml
